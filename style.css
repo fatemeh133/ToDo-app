@@ -1,3 +1,35 @@
+@font-face {
+  font-family: Yekan;
+  font-style: normal;
+  src: url("fonts/iranyekanwebregular.eot");
+  src: url("fonts/iranyekanwebregular.woff") format("woff"),
+    url("fonts/iranyekanwebregular.ttf") format("ttf");
+}
+@font-face {
+  font-family: Yekan;
+  font-style: light;
+  font-weight: 100;
+  src: url("fonts/iranyekanweblight.eot");
+  src: url("fonts/iranyekanweblight.woff") format("woff"),
+    url("fonts/iranyekanweblight.ttf") format("ttf"),
+    url("fonts/iranyekanweblight.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: Yekan;
+  font-style: bold;
+  font-weight: 900;
+  src: url("fonts/iranyekanwebbold.eot");
+  src: url("fonts/iranyekanwebbold.woff") format("woff"),
+    url("fonts/iranyekanwebbold.ttf") format("ttf"),
+    url("fonts/iranyekanwebbold.woff2") format("woff2");
+}
+
+body {
+  font-family: vazir;
+  direction: rtl;
+  font-family: Yekan;
+}
 body {
   background: linear-gradient(
     90deg,
@@ -21,6 +53,7 @@ body {
   backdrop-filter: blur(10px);
   border-radius: 30px;
   padding: 10px;
+  padding-left: 43px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -76,6 +109,9 @@ input[type="checkbox"]:before {
   font-size: 16px;
   padding-left: 13%;
   padding-right: 2%;
+  outline-color: #ad77cf;
+  font-family: "Yekan";
+  font-weight: 100;
 }
 
 .add-container {
@@ -99,4 +135,13 @@ input[type="checkbox"]:before {
 }
 .add-btn:active {
   background: #322344;
+}
+.close-icon {
+  width: 18px;
+  position: absolute;
+  left: 3%;
+  top: 27%;
+}
+.close-icon:hover {
+  cursor: pointer;
 }
