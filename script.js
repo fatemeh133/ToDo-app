@@ -8,6 +8,7 @@ function addTask() {
        ${addInput.value}</label> <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/></div>`;
 
     document.querySelector(".container").insertAdjacentHTML("beforeend", task);
+    addInput.value = "";
   }
 }
 
