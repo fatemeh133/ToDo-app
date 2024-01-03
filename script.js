@@ -56,12 +56,21 @@ addInput.addEventListener("keypress", function (event) {
     addNewTask(addInput);
   }
 });
+function deleteObjectByName(nameToDelete) {
+  let retrievedArrayString = localStorage.getItem("Tasks");
+  let retrievedArray = JSON.parse(retrievedArrayString);
+
+  let jsonString = JSON.stringify(
+    retrievedArray.filter((obj) => obj.taskName !== nameToDelete)
+  );
+  localStorage.setItem(`Tasks`, jsonString);
+}
 
 function closeTask(closeElement) {
+  deleteObjectByName(
+    `${closeElement.parentElement.childNodes[2].innerHTML.trim()}`
+  );
   closeElement.parentElement.remove();
-  //remove from storage
-  let label = closeElement.parentElement.childNodes[2];
-  localStorage.removeItem(`${label.innerHTML.trim()}`);
 }
 
 function check(checkboxElement) {
@@ -80,7 +89,7 @@ function check(checkboxElement) {
 window.addEventListener("load", () => {
   const retrievedArrayString = localStorage.getItem("Tasks");
   const retrievedArray = JSON.parse(retrievedArrayString);
-
+  console.log("Data that is saved in browser:");
   console.log(retrievedArray);
 
   for (let i = 0; i < retrievedArray.length; i++) {
