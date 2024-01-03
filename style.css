@@ -142,6 +142,15 @@ input[type="checkbox"]:before {
   left: 3%;
   top: 27%;
 }
+.edit-icon {
+  width: 15px;
+  position: absolute;
+  right: -20px;
+  top: 27%;
+}
 .close-icon:hover {
+  cursor: pointer;
+}
+.edit-icon {
   cursor: pointer;
 }
