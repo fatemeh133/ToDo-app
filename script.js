@@ -6,8 +6,6 @@ function getDataFromBrowser() {
   return retrievedJson;
 }
 
-function getDataKeys() {}
-
 function addNewTask() {
   addInput.focus();
   // if the input is not empty add task
@@ -84,7 +82,7 @@ function check(checkboxElement) {
 
   let taskName = checkboxElement.parentElement.childNodes[2].innerHTML.trim();
   let labelClass = checkboxElement.parentElement.childNodes[2].classList.value;
-  let checkStat = checkboxElement.parentElement.childNodes[1].checked
+  let checkStat = checkboxElement.parentElement.childNodes[0].checked
     ? "checked"
     : "";
 
@@ -116,16 +114,15 @@ window.addEventListener("load", () => {
 });
 
 // function updateObjectByName(nameToUpdate, newName) {
-//   const retrievedStringJson = localStorage.getItem("Tasks");
-//   const retrievedJson = JSON.parse(retrievedStringJson);
+//   const retrievedJson = getDataFromBrowser();
 //   console.log(retrievedJson);
 
 //   for (let i = 0; i < retrievedJson.length; i++) {
 //     if (retrievedJson[i].taskName === nameToUpdate) {
 //       retrievedJson[i].taskName = newName;
 //       console.log(retrievedJson);
-//       // const jsonString = JSON.stringify(retrievedJson);
-//       // localStorage.setItem(`Tasks`, jsonString);
+//       const jsonString = JSON.stringify(retrievedJson);
+//       localStorage.setItem(`Tasks`, jsonString);
 
 //       break; // Stop the loop since we found and updated the object
 //     }
@@ -133,14 +130,17 @@ window.addEventListener("load", () => {
 // }
 // updateObjectByName(`1`, `2`);
 
-// function editTask(editElement) {
-//   // console.log(editElement.parentElement);
-//   // console.log(editElement.parentElement.childNodes[2].innerHTML.trim());
-//   // let firstContent = editElement.parentElement.childNodes[2].innerHTML.trim();
-//   // let taskElem = editElement.parentElement;
-//   // taskElem.contentEditable = "true";
-//   // editElement.parentElement.addEventListener("blur", () => {
-//   //   taskElem.contentEditable = "false";
-//   //   console.log(editElement.parentElement.childNodes[2]);
-//   // });
-// }
+function editTask(editElement) {
+  console.log(editElement.parentElement);
+  console.log(editElement.parentElement.childNodes[2]);
+  console.log(editElement.parentElement.childNodes[2].innerHTML.trim());
+
+  let firstContent = editElement.parentElement.childNodes[2].innerHTML.trim();
+  let taskElem = editElement.parentElement.childNodes[2];
+  taskElem.focus();
+  taskElem.contentEditable = "true";
+  taskElem.addEventListener("blur", () => {
+    taskElem.contentEditable = "false";
+    console.log(editElement.parentElement.childNodes[2]);
+  });
+}
