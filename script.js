@@ -67,16 +67,22 @@ addInput.addEventListener("keypress", function (event) {
 });
 function deleteObjectByName(nameToDelete) {
   let retrievedArrayString = localStorage.getItem("Tasks");
-
   let retrievedArray = JSON.parse(retrievedArrayString);
-  console.log(retrievedArray);
 
   console.log(retrievedArray.filter((obj) => obj.taskName !== nameToDelete));
-  let jsonString = JSON.stringify(
-    retrievedArray.filter((obj) => obj.taskName !== nameToDelete)
+
+  // Update retrievedArray after filtering
+  retrievedArray = retrievedArray.filter(
+    (obj) => obj.taskName !== nameToDelete
   );
+
+  let jsonString = JSON.stringify(retrievedArray);
   localStorage.setItem(`Tasks`, jsonString);
+
+  // Update taskJson after deleting
+  taskJson = retrievedArray;
 }
+
 // function updateObjectByName(nameToUpdate, newName) {
 //   const retrievedArrayString = localStorage.getItem("Tasks");
 //   const retrievedArray = JSON.parse(retrievedArrayString);
