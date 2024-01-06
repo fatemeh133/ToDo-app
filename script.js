@@ -1,11 +1,11 @@
 let addInput = document.querySelector(".add-input");
 let taskJson = [];
 //get tasks when reload
-const retrievedArrayString = localStorage.getItem("Tasks");
-let ConvertedJson = JSON.parse(retrievedArrayString);
-if (ConvertedJson !== null) {
-  taskJson = ConvertedJson;
-}
+// const retrievedArrayString = localStorage.getItem("Tasks");
+// let ConvertedJson = JSON.parse(retrievedArrayString);
+// if (ConvertedJson !== null) {
+//   taskJson = ConvertedJson;
+// }
 
 // add new task function to use multiple times
 function addNewTask(addInput) {
@@ -13,9 +13,14 @@ function addNewTask(addInput) {
   if (addInput.value !== "") {
     let task = `<div class="Task">
    <input type="checkbox" name="" id="task3"onclick="check(this)"/><label for="task3">
-     ${addInput.value}</label> <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/></div>`;
+     ${addInput.value}</label> <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/> <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/></div>`;
 
     document.querySelector(".container").insertAdjacentHTML("beforeend", task);
+
+    let retrievedArrayString = localStorage.getItem("Tasks");
+
+    let retrievedArray = JSON.parse(retrievedArrayString);
+    console.log(retrievedArray);
 
     //new
     taskJson.push({
@@ -28,6 +33,10 @@ function addNewTask(addInput) {
 
     addInput.value = "";
   }
+  let retrievedArrayString = localStorage.getItem("Tasks");
+
+  let retrievedArray = JSON.parse(retrievedArrayString);
+  console.log(retrievedArray);
 }
 
 function updateCheckedByName(taskName, checkStat, labelClass) {
@@ -58,8 +67,11 @@ addInput.addEventListener("keypress", function (event) {
 });
 function deleteObjectByName(nameToDelete) {
   let retrievedArrayString = localStorage.getItem("Tasks");
-  let retrievedArray = JSON.parse(retrievedArrayString);
 
+  let retrievedArray = JSON.parse(retrievedArrayString);
+  console.log(retrievedArray);
+
+  console.log(retrievedArray.filter((obj) => obj.taskName !== nameToDelete));
   let jsonString = JSON.stringify(
     retrievedArray.filter((obj) => obj.taskName !== nameToDelete)
   );
@@ -90,17 +102,17 @@ function closeTask(closeElement) {
   closeElement.parentElement.remove();
 }
 
-function editTask(editElement) {
-  // console.log(editElement.parentElement);
-  // console.log(editElement.parentElement.childNodes[2].innerHTML.trim());
-  // let firstContent = editElement.parentElement.childNodes[2].innerHTML.trim();
-  // let taskElem = editElement.parentElement;
-  // taskElem.contentEditable = "true";
-  // editElement.parentElement.addEventListener("blur", () => {
-  //   taskElem.contentEditable = "false";
-  //   console.log(editElement.parentElement.childNodes[2]);
-  // });
-}
+// function editTask(editElement) {
+//   // console.log(editElement.parentElement);
+//   // console.log(editElement.parentElement.childNodes[2].innerHTML.trim());
+//   // let firstContent = editElement.parentElement.childNodes[2].innerHTML.trim();
+//   // let taskElem = editElement.parentElement;
+//   // taskElem.contentEditable = "true";
+//   // editElement.parentElement.addEventListener("blur", () => {
+//   //   taskElem.contentEditable = "false";
+//   //   console.log(editElement.parentElement.childNodes[2]);
+//   // });
+// }
 
 function check(checkboxElement) {
   let label = checkboxElement.parentElement.childNodes[2];
@@ -127,7 +139,7 @@ window.addEventListener("load", () => {
     //make a task base on keys
     if (itemName !== null) {
       let task = `<div class="Task">
-     <input type="checkbox" name="" id="task${i}"onclick="check(this)"${retrievedArray[i].checkStat}/><label for="task${i}" class="${retrievedArray[i].labelClass}">
+     <input type="checkbox" name="" id="task${i}"onclick="check(this)"${retrievedArray[i].checkStat}/><label class="${retrievedArray[i].labelClass}">
        ${itemName}</label> <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/> <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/></div>`;
 
       document
