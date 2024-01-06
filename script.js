@@ -12,8 +12,8 @@ function addNewTask(addInput) {
   addInput.focus();
   if (addInput.value !== "") {
     let task = `<div class="Task">
-   <input type="checkbox" name="" id="task3"onclick="check(this)"/><label for="task3">
-     ${addInput.value}</label> <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/></div>`;
+   <input type="checkbox" name="" id="task3"onclick="check(this)"/><label >
+     ${addInput.value}</label> <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/> <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/></div>`;
 
     document.querySelector(".container").insertAdjacentHTML("beforeend", task);
 
@@ -127,7 +127,7 @@ window.addEventListener("load", () => {
     //make a task base on keys
     if (itemName !== null) {
       let task = `<div class="Task">
-     <input type="checkbox" name="" id="task${i}"onclick="check(this)"${retrievedArray[i].checkStat}/><label for="task${i}" class="${retrievedArray[i].labelClass}">
+     <input type="checkbox" name="" id="task${i}"onclick="check(this)"${retrievedArray[i].checkStat}/><label class="${retrievedArray[i].labelClass}">
        ${itemName}</label> <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/> <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/></div>`;
 
       document
