@@ -1,62 +1,56 @@
 let addInput = document.querySelector(".add-input");
-let taskJson = [];
 
 function addNewTask() {
   addInput.focus();
+  // if the input is not empty add task
   if (addInput.value.trim() !== "") {
     let task = `<div class="Task">
-   <input type="checkbox" name="" id="task3"onclick="check(this)"/><label for="task3">
-     ${addInput.value}</label> <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/> <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/></div>`;
+   <input type="checkbox" onclick="check(this)"/><label>${addInput.value.trim()}</label> 
+   <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/> 
+   <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/>
+   </div>`;
 
     document.querySelector(".container").insertAdjacentHTML("beforeend", task);
 
-    let retrievedArrayString = localStorage.getItem("Tasks");
+    let retrievedStringJson = localStorage.getItem("Tasks");
+    let retrievedJson = JSON.parse(retrievedStringJson) || []; // Initialize to an empty array if null
 
-    let retrievedArray = JSON.parse(retrievedArrayString);
-    console.log(retrievedArray);
-
-    //add to array
-    taskJson.push({
-      taskName: `${addInput.value}`,
+    // Add the new task directly to the array
+    retrievedJson.push({
+      taskName: addInput.value.trim(),
       checkStat: "",
       labelClass: "",
     });
-    console.log(retrievedArray);
-    const jsonString = JSON.stringify(taskJson);
-    localStorage.setItem(`Tasks`, jsonString);
+    const jsonString = JSON.stringify(retrievedJson);
+    localStorage.setItem("Tasks", jsonString);
 
     addInput.value = "";
   }
 }
 
 function deleteObjectByName(nameToDelete) {
-  let retrievedArrayString = localStorage.getItem("Tasks");
-  let retrievedArray = JSON.parse(retrievedArrayString);
+  let retrievedStringJson = localStorage.getItem("Tasks");
+  let retrievedJson = JSON.parse(retrievedStringJson);
 
-  console.log(retrievedArray.filter((obj) => obj.taskName !== nameToDelete));
+  console.log(retrievedJson.filter((obj) => obj.taskName !== nameToDelete));
 
-  // Update retrievedArray after filtering
-  retrievedArray = retrievedArray.filter(
-    (obj) => obj.taskName !== nameToDelete
-  );
+  // Update retrievedJson after filtering
+  retrievedJson = retrievedJson.filter((obj) => obj.taskName !== nameToDelete);
 
-  let jsonString = JSON.stringify(retrievedArray);
+  let jsonString = JSON.stringify(retrievedJson);
   localStorage.setItem(`Tasks`, jsonString);
-
-  // Update taskJson after deleting
-  taskJson = retrievedArray;
 }
 
 function updateCheckedByName(taskName, checkStat, labelClass) {
-  const retrievedArrayString = localStorage.getItem("Tasks");
-  const retrievedArray = JSON.parse(retrievedArrayString);
+  const retrievedStringJson = localStorage.getItem("Tasks");
+  const retrievedJson = JSON.parse(retrievedStringJson);
 
-  for (let i = 0; i < retrievedArray.length; i++) {
-    if (retrievedArray[i].taskName === taskName) {
-      retrievedArray[i].checkStat = checkStat;
-      retrievedArray[i].labelClass = labelClass;
+  for (let i = 0; i < retrievedJson.length; i++) {
+    if (retrievedJson[i].taskName === taskName) {
+      retrievedJson[i].checkStat = checkStat;
+      retrievedJson[i].labelClass = labelClass;
 
-      const jsonString = JSON.stringify(retrievedArray);
+      const jsonString = JSON.stringify(retrievedJson);
       localStorage.setItem(`Tasks`, jsonString);
 
       break; // Stop the loop since we found and updated the object
@@ -95,19 +89,19 @@ function check(checkboxElement) {
 }
 
 window.addEventListener("load", () => {
-  const retrievedArrayString = localStorage.getItem("Tasks");
-  const retrievedArray = JSON.parse(retrievedArrayString);
-  if (retrievedArray) {
+  const retrievedStringJson = localStorage.getItem("Tasks");
+  const retrievedJson = JSON.parse(retrievedStringJson);
+  if (retrievedJson) {
     console.log("Data browser:");
-    console.log(retrievedArray);
+    console.log(retrievedJson);
 
-    for (let i = 0; i < retrievedArray.length; i++) {
+    for (let i = 0; i < retrievedJson.length; i++) {
       //get all storage keys
-      let itemName = retrievedArray[i].taskName;
+      let itemName = retrievedJson[i].taskName;
       //make a task base on keys
       if (itemName !== null) {
         let task = `<div class="Task">
-     <input type="checkbox" name="" id="task${i}"onclick="check(this)"${retrievedArray[i].checkStat}/><label class="${retrievedArray[i].labelClass}">
+     <input type="checkbox" name="" id="task${i}"onclick="check(this)"${retrievedJson[i].checkStat}/><label class="${retrievedJson[i].labelClass}">
        ${itemName}</label> <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/> <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/></div>`;
 
         document
@@ -119,15 +113,15 @@ window.addEventListener("load", () => {
 });
 
 // function updateObjectByName(nameToUpdate, newName) {
-//   const retrievedArrayString = localStorage.getItem("Tasks");
-//   const retrievedArray = JSON.parse(retrievedArrayString);
-//   console.log(retrievedArray);
+//   const retrievedStringJson = localStorage.getItem("Tasks");
+//   const retrievedJson = JSON.parse(retrievedStringJson);
+//   console.log(retrievedJson);
 
-//   for (let i = 0; i < retrievedArray.length; i++) {
-//     if (retrievedArray[i].taskName === nameToUpdate) {
-//       retrievedArray[i].taskName = newName;
-//       console.log(retrievedArray);
-//       // const jsonString = JSON.stringify(retrievedArray);
+//   for (let i = 0; i < retrievedJson.length; i++) {
+//     if (retrievedJson[i].taskName === nameToUpdate) {
+//       retrievedJson[i].taskName = newName;
+//       console.log(retrievedJson);
+//       // const jsonString = JSON.stringify(retrievedJson);
 //       // localStorage.setItem(`Tasks`, jsonString);
 
 //       break; // Stop the loop since we found and updated the object
