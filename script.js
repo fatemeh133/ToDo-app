@@ -6,6 +6,11 @@ function getDataFromBrowser() {
   return retrievedJson;
 }
 
+function setDataToBrowser(retrievedJson) {
+  const jsonString = JSON.stringify(retrievedJson);
+  localStorage.setItem("Tasks", jsonString);
+}
+
 function addNewTask() {
   addInput.focus();
   // if the input is not empty add task
@@ -26,8 +31,8 @@ function addNewTask() {
       checkStat: "",
       labelClass: "",
     });
-    const jsonString = JSON.stringify(retrievedJson);
-    localStorage.setItem("Tasks", jsonString);
+
+    setDataToBrowser(retrievedJson);
 
     addInput.value = "";
   }
@@ -39,8 +44,7 @@ function deleteObjectByName(nameToDelete) {
   // Update retrievedJson after filtering
   retrievedJson = retrievedJson.filter((obj) => obj.taskName !== nameToDelete);
 
-  let jsonString = JSON.stringify(retrievedJson);
-  localStorage.setItem(`Tasks`, jsonString);
+  setDataToBrowser(retrievedJson);
 }
 
 function updateCheckedByName(taskName, checkStat, labelClass) {
@@ -51,8 +55,7 @@ function updateCheckedByName(taskName, checkStat, labelClass) {
       retrievedJson[i].checkStat = checkStat;
       retrievedJson[i].labelClass = labelClass;
 
-      const jsonString = JSON.stringify(retrievedJson);
-      localStorage.setItem(`Tasks`, jsonString);
+      setDataToBrowser(retrievedJson);
 
       break; // Stop the loop since we found and updated the object
     }
@@ -113,34 +116,32 @@ window.addEventListener("load", () => {
   }
 });
 
-// function updateObjectByName(nameToUpdate, newName) {
-//   const retrievedJson = getDataFromBrowser();
-//   console.log(retrievedJson);
+function updateObjectByName(nameToUpdate, newName) {
+  const retrievedJson = getDataFromBrowser();
 
-//   for (let i = 0; i < retrievedJson.length; i++) {
-//     if (retrievedJson[i].taskName === nameToUpdate) {
-//       retrievedJson[i].taskName = newName;
-//       console.log(retrievedJson);
-//       const jsonString = JSON.stringify(retrievedJson);
-//       localStorage.setItem(`Tasks`, jsonString);
+  for (let i = 0; i < retrievedJson.length; i++) {
+    if (retrievedJson[i].taskName === nameToUpdate) {
+      retrievedJson[i].taskName = newName;
 
-//       break; // Stop the loop since we found and updated the object
-//     }
-//   }
-// }
-// updateObjectByName(`1`, `2`);
+      setDataToBrowser(retrievedJson);
+
+      break; // Stop the loop since we found and updated the object
+    }
+  }
+}
 
 function editTask(editElement) {
-  console.log(editElement.parentElement);
-  console.log(editElement.parentElement.childNodes[2]);
-  console.log(editElement.parentElement.childNodes[2].innerHTML.trim());
-
   let firstContent = editElement.parentElement.childNodes[2].innerHTML.trim();
+
   let taskElem = editElement.parentElement.childNodes[2];
   taskElem.focus();
   taskElem.contentEditable = "true";
   taskElem.addEventListener("blur", () => {
     taskElem.contentEditable = "false";
-    console.log(editElement.parentElement.childNodes[2]);
+
+    let changedcontent =
+      editElement.parentElement.childNodes[2].innerHTML.trim();
+
+    updateObjectByName(`${firstContent}`, `${changedcontent}`);
   });
 }
