@@ -134,8 +134,8 @@ function editTask(editElement) {
   let firstContent = editElement.parentElement.childNodes[2].innerHTML.trim();
 
   let taskElem = editElement.parentElement.childNodes[2];
-  taskElem.focus();
   taskElem.contentEditable = "true";
+  taskElem.focus();
   taskElem.addEventListener("blur", () => {
     taskElem.contentEditable = "false";
 
