@@ -154,3 +154,7 @@ input[type="checkbox"]:before {
 .edit-icon {
   cursor: pointer;
 }
+
+.Task.dragging {
+  opacity: 0;
+}

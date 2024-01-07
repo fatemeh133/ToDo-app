@@ -114,6 +114,22 @@ window.addEventListener("load", () => {
         .insertAdjacentHTML("beforeend", task);
     }
   }
+
+  // drag
+  let TasksToDrag = document.querySelectorAll(".Task");
+  console.log(TasksToDrag);
+
+  TasksToDrag.forEach((task) => {
+    task.addEventListener("dragstart", () => {
+      setTimeout(() => task.classList.add("dragging"), 8);
+    });
+  });
+
+  TasksToDrag.forEach((task) => {
+    task.addEventListener("dragend", () => {
+      task.classList.remove("dragging");
+    });
+  });
 });
 
 function updateObjectByName(nameToUpdate, newName) {
