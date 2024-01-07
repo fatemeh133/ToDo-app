@@ -15,7 +15,7 @@ function addNewTask() {
   addInput.focus();
   // if the input is not empty add task
   if (addInput.value.trim() !== "") {
-    let task = `<div class="Task">
+    let task = `<div class="Task" draggable="true">
    <input type="checkbox" onclick="check(this)"/><label>${addInput.value.trim()}</label> 
    <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/> 
    <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/>
@@ -104,7 +104,7 @@ window.addEventListener("load", () => {
     let labelClass = retrievedJson[i].labelClass;
 
     if (itemName !== null) {
-      let task = `<div class="Task"><input type="checkbox" id="task${i}"onclick="check(this)"${checkStat}/>
+      let task = `<div class="Task" draggable="true"><input type="checkbox" id="task${i}"onclick="check(this)"${checkStat}/>
         <label class="${labelClass}">${itemName}</label> 
         <img src="image/x.svg" alt="" class="close-icon" onclick="closeTask(this)"/> 
         <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/></div>`;
@@ -136,6 +136,7 @@ function editTask(editElement) {
   let taskElem = editElement.parentElement.childNodes[2];
   taskElem.contentEditable = "true";
   taskElem.focus();
+
   taskElem.addEventListener("blur", () => {
     taskElem.contentEditable = "false";
 
