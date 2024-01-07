@@ -21,7 +21,9 @@ function addNewTask() {
    <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/>
    </div>`;
 
-    document.querySelector(".container").insertAdjacentHTML("beforeend", task);
+    document
+      .querySelector(".sortable-list")
+      .insertAdjacentHTML("beforeend", task);
 
     let retrievedJson = getDataFromBrowser();
 
@@ -110,14 +112,21 @@ window.addEventListener("load", () => {
         <img src="image/edit.svg" alt="" class="edit-icon" onclick="editTask(this)"/></div>`;
 
       document
-        .querySelector(".container")
+        .querySelector(".sortable-list")
         .insertAdjacentHTML("beforeend", task);
     }
   }
 
   // drag
   let TasksToDrag = document.querySelectorAll(".Task");
-  console.log(TasksToDrag);
+  let sortable = document.querySelector(".sortable-list");
+
+  sortable.addEventListener("dragover", initSortableList);
+
+  function initSortableList() {
+    let siblings = sortable.querySelectorAll(".Task");
+    console.log(siblings);
+  }
 
   TasksToDrag.forEach((task) => {
     task.addEventListener("dragstart", () => {
